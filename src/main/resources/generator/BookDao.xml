@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generate.BookDao">
+  <resultMap id="BaseResultMap" type="generate.Book">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="card" jdbcType="VARCHAR" property="card" />
+    <result column="autho" jdbcType="VARCHAR" property="autho" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="press" jdbcType="VARCHAR" property="press" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bid, `name`, card, autho, num, press, `type`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="bid" keyProperty="bid" parameterType="generate.Book" useGeneratedKeys="true">
+    insert into book (`name`, card, autho, 
+      num, press, `type`)
+    values (#{name,jdbcType=VARCHAR}, #{card,jdbcType=VARCHAR}, #{autho,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{press,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="bid" keyProperty="bid" parameterType="generate.Book" useGeneratedKeys="true">
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="card != null">
+        card,
+      </if>
+      <if test="autho != null">
+        autho,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="press != null">
+        press,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null">
+        #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="autho != null">
+        #{autho,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="press != null">
+        #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="generate.Book">
+    update book
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null">
+        card = #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="autho != null">
+        autho = #{autho,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="press != null">
+        press = #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="generate.Book">
+    update book
+    set `name` = #{name,jdbcType=VARCHAR},
+      card = #{card,jdbcType=VARCHAR},
+      autho = #{autho,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      press = #{press,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+</mapper>
